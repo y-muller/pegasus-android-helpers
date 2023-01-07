@@ -41,3 +41,6 @@ If you are confident you can edit the top of the script to enable automatic dele
 
 Skyscraper doesn't remove anything from its cache when games are deleted. The script will run the vacuum command on all the platforms.
 
+### Widgets
+If you have installed Termux:Widgets you can add shortcuts to your home screen. The scripts MUST be in `.shortcuts`.
+
