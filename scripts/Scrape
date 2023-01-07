@@ -1,0 +1,47 @@
+#!/bin/bash
+
+#set -x 
+
+module=screenscraper
+
+#---------------
+lastrun=~/.skyscraper/skyscraper.lastrun 
+
+if [ ! -f ${lastrun} ]; then
+    echo "First run: this could take a long time..."
+    # create a lastrun file far in the past to scan everything
+    touch -d "1/1/1970" ${lastrun}
+fi
+#---------------
+
+inputline=$(grep -m 1 inputFolder .skyscraper/config.ini)
+rompath=${inputline##*=}
+rompath="${rompath%\"}"
+rompath="${rompath#\"}"
+
+echo Looking for new ROMs in $rompath
+
+systems=$(find ${rompath} -mindepth 2 -maxdepth 2 -type f -cnewer ${lastrun} -exec sh -c 'basename $(dirname "$0")' {} \; | sort | uniq)
+
+for system in $systems
+do
+    echo Processing $system ...
+
+    if [ "$system" = "mame" ]; then
+        system="mame-libretro"
+    elif [ "$system" = "fbneo" ]; then
+        system="fba"
+    fi
+
+    Skyscraper -p ${system} -s ${module} --flags unattendskip
+    Skyscraper -p ${system} --flags unattendskip
+done
+
+# Update lastrun
+touch ${lastrun}
+
+# If launched from a Termux shortcut, closes automatically
+# wait for a key press
+read -n 1 -r -s -p "Press any key to continue..." key
+echo ""
+

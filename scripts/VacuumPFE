@@ -1,0 +1,27 @@
+#!/bin/bash
+# Vacuums the Skyscraper cache for all platforms found in the ROM path.
+
+inputline=$(grep -m 1 inputFolder .skyscraper/config.ini)
+if [[ "$inputline" == "" ]]; then
+    echo "Couldn't find 'inputFolder' in Skyscraper's config file."
+    quit 1
+fi
+rompath=${inputline##*=}
+rompath="${rompath%\"}"
+rompath="${rompath#\"}"
+
+echo "Skyscraper cache vacuum"
+for pdir in $rompath/*/
+do
+    platform=$(basename "$pdir")
+    if [[ "$platform" == "mame" ]]; then
+        platform="mame-libretro"
+    elif [[ "$platform" == "fbneo" ]]; then
+        platform="fba"
+    fi
+    Skyscraper -p $platform --cache vacuum
+done
+
+read -n 1 -r -s -p "Press any key to continue..." key
+echo ""
+
