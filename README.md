@@ -23,21 +23,21 @@ We are ready to install Skycraper!
 
 ## Skyscraper
 
-TODO
+See the Skycraper [installation page](INSTALL_SKYSCRAPER.md).
 
 ## Helper scripts
 
-**Scrape**
+**[Scrape](scripts/Scrape)**
 
 Runs Skyscraper on all your game platforms. No configuration is needed as the script reads Skyscraper's config.ini file. The first run can take a long time. The next time, only platforms with new files since the previous run are scraped.
 
-**CleanMetadata**
+**[CleanMetadata](scripts/CleanMetadata)**
 
-When you delete games, it's assets are still there in your filesystem (covers, videos...). This scripts finds those orphaned files and create a script to delete them. Review the file `pfe_delete_orphan.sh` and run it if you are happy with what you see.
+When you delete games, it's assets are still there in your filesystem (covers, videos...). This scripts finds those orphaned files and create a script to delete them. Review the file `pfe_delete_orphans.sh` and run it if you are happy with what you see.
 
 If you are confident you can edit the top of the script to enable automatic deletion.
 
-**VacuumPFE**
+**[VacuumPFE](scripts/VacuumPFE)**
 
 Skyscraper doesn't remove anything from its cache when games are deleted. The script will run the vacuum command on all the platforms.
 
