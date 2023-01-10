@@ -1,14 +1,24 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+# Find orphaned assets from games that have been deleted.
 
 ##### Config #####
+# Don't edit the configuration in this file as it would be overwritten on updates.
+# Create the file .config/pegasus_android_helpers.conf and override the variables.
 
 # leave empty to scan every directory in each platform
 assetdirs="covers marquees screenshots videos wheels"
-#assetdirs=""
+
+# delete all orphaned assets. Dangerous!
 autodelete=no  # automatically delete orphaned assets (yes|no)
 
-scriptname=~/pfe_delete_orphans.sh
+# script created to delete orphan assets
+orphansfile=~/pegasus_rm_orphans.sh
 
 ##################
+if [[ -f ~/.config/pegasus_android_helpers.conf ]]; then
+    source ~/.config/pegasus_android_helpers.conf
+fi
 
 function find_match {
     platform=$1
@@ -18,12 +28,12 @@ function find_match {
     game="$(printf '%q' "${game}")" # escapes special characters
     res=$(find "$rompath/$platform" -name "${game}.*" |wc -l)
     if [[ "$res" == "0" ]]; then
-        echo "rm \"$asset\"" >> $scriptname
+        echo "rm \"$asset\"" >> $orphansfile
     fi
 }
 
 # Make sure there is no leftover script from a previous run
-rm -f $scriptname
+rm -f $orphansfile
 
 inputline=$(grep -m 1 inputFolder .skyscraper/config.ini)
 if [[ "$inputline" == "" ]]; then
@@ -83,7 +93,7 @@ do
     done
 done
 
-num_orphans=$(cat $scriptname 2>/dev/null |wc -l)
+num_orphans=$(cat $orphansfile 2>/dev/null |wc -l)
 
 if [[ "$num_orphans" == "0" ]]; then
     echo "No orphaned assets found."
@@ -96,6 +106,7 @@ echo $num_orphans orphaned assets.
 
 
 if [[ "$autodelete" == "yes" ]]; then
-    source $scriptname
+    source $orphansfile
+    rm $orphansfile
 fi
 

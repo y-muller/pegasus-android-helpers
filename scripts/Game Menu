@@ -1,0 +1,81 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+##### Config #####
+
+orphansfile=~/pegasus_rm_orphans.sh
+
+##################
+if [[ -f ~/.config/pegasus_android_helpers.conf ]]; then
+    source ~/.config/pegasus_android_helpers.conf
+fi
+
+options=("Scrape new games" "Clean metadata" "Vacuum Skyscraper's cache" "Update Android collection")
+
+if [[ "$flow_uri" != "" ]]; then
+    options+=("Add Android game")
+fi
+
+function parse_jres {
+    code=${jres##*\"code\": }
+    code="${code%%,*}"
+    text=${jres##*\"text\": \"}
+    text="${text%%\"*}"
+    index=${jres##*\"index\": }
+    index="${index:0:-2}"
+    #echo "code: ${code}, text: \"${text}\", index: ${index}"
+}
+
+function handle_orphans {
+    jres=$(termux-dialog radio -t "Orphan metadata found" -v "Review files to delete,Delete unneeded files")
+    parse_jres
+
+    if [[ "$code" != "-1" ]]; then
+        exit 0
+    fi
+    case $index in
+        0)
+            less "$orphansfile"
+            handle_orphans
+            ;;
+        1)
+            source "$orphansfile"
+            rm "$orphansfile"
+            ;;
+    esac
+}
+
+jres=$(termux-dialog sheet -t "Pegasus / Skyscraper" -v "${options[0]},${options[1]},${options[2]},${options[3]},${options[4]}")
+parse_jres
+
+if [[ "$code" != "0" ]]; then
+    exit 0
+fi
+
+case $index in
+    0)
+        ~/.shortcuts/Scrape
+        echo Done ;;
+    1)
+        ~/.shortcuts/CleanMetadata
+        if [[ -f ~/pfe_delete_orphans.sh ]]; then
+            handle_orphans
+        fi
+        ;;
+    2)
+        ~/.shortcuts/VacuumPFE
+        echo Done
+        ;;
+    3)
+        echo Starting
+        read -n 1 -r -s -p "Press any key to continue..." key
+
+        ~/.shortcuts/UpdateAndroidCollection
+        echo Done
+        read -n 1 -r -s -p "Press any key to continue..." key
+
+        ;;
+    4)
+        am start -a com.llamalab.automate.intent.action.START_FLOW -d $flow_uri
+        ;;
+esac
+

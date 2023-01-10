@@ -1,8 +1,17 @@
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 
-#set -x 
+# Look for new ROMs since the last run.
+
+##### Config #####
+# Don't edit the configuration in this file as it would be overwritten on updates.
+# Create the file .config/pegasus_android_helpers.conf and override the variables.
 
 module=screenscraper
+
+##################
+if [[ -f ~/.config/pegasus_android_helpers.conf ]]; then
+    source ~/.config/pegasus_android_helpers.conf
+fi
 
 #---------------
 lastrun=~/.skyscraper/skyscraper.lastrun 
@@ -22,6 +31,10 @@ rompath="${rompath#\"}"
 echo Looking for new ROMs in $rompath
 
 systems=$(find ${rompath} -mindepth 2 -maxdepth 2 -type f -cnewer ${lastrun} -exec sh -c 'basename $(dirname "$0")' {} \; | sort | uniq)
+
+if [[ "$systems" == "" ]];then
+    echo "No new game found."
+fi
 
 for system in $systems
 do

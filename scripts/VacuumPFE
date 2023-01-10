@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
+
 # Vacuums the Skyscraper cache for all platforms found in the ROM path.
 
 inputline=$(grep -m 1 inputFolder .skyscraper/config.ini)
