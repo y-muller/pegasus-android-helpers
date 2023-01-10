@@ -1,0 +1,111 @@
+#!/bin/bash
+
+# Assembles the Pegasus metadata file for Android games from the *.and fragments.
+#
+# An easy way to create the .and for a game is to use the the App2Pegasus flow for
+# the Automate app. This script can create an empty file:
+#   BuildAndroidMetadata new "Game Title"
+#
+# Don't forget to complete the .and file with information like genre and description.
+#
+# The artwork can be provided either in a directory of the same name as the game and
+# named after the asset type, or in a directory per asset type and with a name matching
+# the game exactly.
+#
+# For example:
+#   Dead Cells.and
+#   Dead Cells/screenshot.jpg
+#   covers/Dead Cells.png
+
+##### config #####
+# Don't edit the configuration in this file as it would be overwritten on updates.
+# Create the file .config/pegasus_android_helpers.conf and override the variables.
+
+# Where to find the Android metedata. If a relative path it will be appended to
+# the ROM path of Skyscraper. If a full path it will be used as-is.
+androidgamedir=android
+# The name of the collection in Pegasus.
+androidgametitle=Android
+# The assets to look for
+androidassets="cover screenshot video wheel"
+
+##################
+if [[ -f ~/.config/pegasus_android_helpers.conf ]]; then
+    source ~/.config/pegasus_android_helpers.conf
+fi
+
+metafile=metadata.pegasus.txt
+
+function new_game {
+    newfile="$gamepath/$1.and"
+    if [[ -f $newfile ]]; then
+        echo "Game file '$1.and' already exists."
+        read -n 1 -s -p $'Overwrite file? (y/N)\n' res
+        if [[ "$res" != "y" ]]; then
+            echo "Not replaced."
+            exit 1
+        fi
+    fi
+    echo -e "game: $1\nfile: ./$1.and\nlaunch: \nrelease: \ndeveloper: \npublisher: \ngenre: \ndescription:\n  " >"$newfile"
+    mkdir -p "$gamepath/$1"
+    echo -e "Created new enpty '$1.and' file. Complete the metadata and add\nthe artwork in the game directory."
+    exit 0
+}
+
+function link_assets {
+    gamename=${game##*/}
+    gamename=${gamename%.and}
+    for asset in $androidassets
+    do
+        artwork=$(ls -t "$gamepath"/"$gamename"/$asset.* 2>/dev/null| head -n 1)
+        if [[ "$artwork" == "" ]]; then
+            artwork=$(ls -t "$gamepath"/${asset}s/"$gamename".* 2>/dev/null| head -n 1)
+        fi
+        if [[ "$artwork" != "" ]]; then
+            # convert to relative path for clarity
+            artwork=".${artwork#$gamepath}"
+            if [[ "$asset" == "cover" ]]; then
+                asset="boxFront"
+            fi
+            #echo "   $asset: $artwork"
+            echo "assets.$asset: $artwork" >>$tmpfile
+        fi
+    done
+    echo -e "" >>$tmpfile
+}
+
+if [[ $androidgamedir == \/* ]];then
+    gamepath=$androidgamedir
+else
+    inputline=$(grep -m 1 inputFolder ~/.skyscraper/config.ini)
+    if [[ "$inputline" == "" ]]; then
+        echo "Couldn't find 'inputFolder' in Skyscraper's config file."
+        quit 1
+    fi
+    gamepath=${inputline##*=}
+    gamepath="${gamepath%\"}"
+    gamepath="${gamepath#\"}"
+    gamepath=$gamepath/$androidgamedir
+fi
+echo Looking for Android games in $gamepath
+
+if [[ "$1" == "new" ]]; then
+    new_game "$2"
+fi
+
+tmpfile=$gamepath/tmp.pegasus_metadata
+echo -e "collection: ${androidgametitle}\nshortname: android\nextensions: and\nlaunch: none\n" >$tmpfile
+
+for game in $gamepath/*.and
+do
+    #echo $game
+    awk 'NF' "$game" >>$tmpfile
+    link_assets
+done
+
+# Move the previous metadata file and replace with the new
+if [[ -f "$gamepath/$metafile" ]]; then
+    mv "$gamepath/$metafile" "$gamepath/$metafile-$(date +"%Y%m%d_%H%M%S")"
+fi
+mv $tmpfile "$gamepath/$metafile" 
+
