@@ -1,6 +1,10 @@
 # Attempt to install Skyscraper and pegasus-android-helpers
 
-pkg upgrade -y
+apt-get update && 
+	apt-get -o "Dpkg::Options::=--force-confold"  upgrade -q -y --force-yes &&
+	apt-get -o "Dpkg::Options::=--force-confold"  dist-upgrade -q -y --force-yes
+pkg autoclean
+pkg update -y && pkg upgrade -y
 
 echo STOP
 exit
