@@ -10,15 +10,12 @@ pkg update -y && pkg upgrade -y
 # install required app - 
 cmd package list packages|grep com.termux.api 
 if ! cmd package list packages|grep com.termux.api ; then
-    echo API NOT INSTALLED
     termux-open https://f-droid.org/packages/com.termux.api
-else
-    echo API OK
 fi
-if ! cmd package list packages|grep com.termux.widget; then
+if ! cmd package list packages|grep com.termux.widget ; then
     termux-open https://f-droid.org/packages/com.termux.widget
 fi
-if ! cmd package list packages|grep com.llamalab.automate; then
+if ! cmd package list packages|grep com.llamalab.automate ; then
     termux-open https://play.google.com/store/apps/details?id=com.llamalab.automate
 fi
 
@@ -51,5 +48,5 @@ Skyscraper
 cd ~/src
 git clone https://github.com/y-muller/pegasus-android-helpers
 cd pegasus-android-helpers
-./install_helpers.sh
+source ./install_helpers.sh
 
