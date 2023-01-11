@@ -1,8 +1,10 @@
 # pegasus-android-helpers
 A few scripts and doc to help with Pegaus Frontend and Skyscraper on Android.
 
+An [automated installation](AUTOINSTALL.md) is available.
+
 ## Termux
-Termux is required to install Skyscraper. Install Termux and Termux:Widget from F-Droid or the Play Store. Installing Termux:API as well is recommended to use the Menu script.
+Termux is required to install Skyscraper. Install [Termux](https://f-droid.org/en/packages/com.termux), [Termux:Widget](https://f-droid.org/en/packages/com.termux.widget) and [Termux:API](https://f-droid.org/en/packages/com.termux.api) from F-Droid. Do not install it from the Play Store as those versions are outdated. Termux:Widget allows to start the scripts from an icon on the home screen and Termux:API is used to start a flow in Automate.
 
 
 I like to install an SSH server so I can do the rest from the comfort of my computer. The `whoami` command gives your user name and also check your WiFi settings for your current IP address.
