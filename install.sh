@@ -2,9 +2,9 @@
 
 pkg update -y && pkg upgrade -y
 
-pkg install x11-repo
-pkg install build-essential qt5-qmake git zstd
-pkg install termux-api
+pkg install x11-repo -y
+pkg install build-essential qt5-qmake git zstd -y
+pkg install termux-api -y
 
 mkdir -p src
 cd src
