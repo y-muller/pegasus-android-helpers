@@ -1,6 +1,9 @@
 # Attempt to install Skyscraper and pegasus-android-helpers
 
-pkg update -y && pkg upgrade -y
+pkg upgrade -y
+
+echo STOP
+exit
 
 pkg install x11-repo -y
 pkg install build-essential qt5-qmake git zstd -y
