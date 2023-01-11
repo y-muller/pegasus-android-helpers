@@ -50,7 +50,7 @@ Skyscraper doesn't remove anything from its cache when games are deleted. The sc
 
 Creating metadata for Android games is a manual process that this script tries to help with. This is described is details [here](ANDROID_APPS.md).
 
-**[Game Menu](scripts/Game Menu)**
+**[Game Menu](scripts/Game%20Menu)**
 
 This script shows a graphical menu to call the other scripts. Termux:API is required for this one as it uses termux-dialog.
 
