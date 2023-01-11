@@ -9,6 +9,13 @@ if [[ -f ~/.config/pegasus_android_helpers.conf ]]; then
     source ~/.config/pegasus_android_helpers.conf
 fi
 
+# make sure Termux:API is available
+if ! type termux-dialog &>/dev/null ;then 
+    echo "Termux:API is required. Install it from F-Droid or Google Play and run"
+    echo " >  pkg install termux-api"
+    exit 1
+fi
+
 options=("Scrape new games" "Clean metadata" "Vacuum Skyscraper's cache" "Update Android collection")
 
 if [[ "$flow_uri" != "" ]]; then
@@ -62,7 +69,7 @@ case $index in
         fi
         ;;
     2)
-        ~/.shortcuts/VacuumPFE
+        ~/.shortcuts/VacuumCache
         echo Done
         ;;
     3)
