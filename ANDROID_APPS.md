@@ -27,10 +27,12 @@ description:
   Project AM2R aims to recreate Metroid II with updated graphics and gameplay. Taking elements from newer Metroid titles: the fast paced gameplay of Metroid: Zero Mission, the atmosphere and solitude of Super Metroid, and adding new game mechanics, AM2R is one of the most ambitious Metroid fan games. FEATURES: • Metroid Zero Mission-style gameplay • Map system • Updated enemy AI • Minibosses • New areas • Challenging Metroid fights • Stackable beam system • Completely redrawn enemy and Metroid sprites • Log system with non-intrusive narrative • High-quality soundtrack
 ```
 
-The Automate flow included in this repo, App2Pegasus, lets you select an app and create a metadata file for the app with the launch command already filled in. The other details are left empty. You still have to complete the info manually.
+The Automate flow included in this repo, App2Pegasus, lets you select an app and create a metadata file for the app with the launch command already filled in. The other details are left empty. You still have to complete the info manually. The flow can be launched from the Game Menu with a small bit of configuration, see at the bottom of this page.
 
 The UpdateAndroidCollection has an option to create a skeleton metadata file. You will need to find the launch command using one of many apps listing apps and activities.
-`UpdateAndroidCollection new "New Game"`
+```
+UpdateAndroidCollection new "New Game"
+```
 
 Do not link to the artwork in the .and file.
 
@@ -55,4 +57,15 @@ UpdateAndroidCollection
 ```
 
 Or launch the *Game Menu* script from a shortcut on your home screen and select the "Update Android Collection" option.
+
+### Game Menu
+
+The Game Menu script is a convenient way to run all the other scripts. Just add a shortcut widget to your home screen.
+
+The menu entry to start the App2Pegasus Automate flow needs one line of configuration. First run Automate and import the flow indluded in this repository. Edit the flow and tap the block 1, Flow beginning "App2Pegasus". Tap the last line named "Flow URI" to copy it to the clipboard. Now edit the file `.config/pegasus-android-helpers.conf` and add a line like this:
+```
+flow_uri=<paste Flow URI from clipboard>
+```
+
+The flow is just small enough to work with the free version of Automate.
 
