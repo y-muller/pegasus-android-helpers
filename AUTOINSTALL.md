@@ -1,16 +1,23 @@
 # Automated installation
 
-First install [Termux](https://f-droid.org/en/packages/com.termux) from F-Droid. Then in Termux, run the following:
+First install [Termux](https://f-droid.org/en/packages/com.termux) from F-Droid. Install [Termux:API](https://f-droid.org/en/packages/com.termux.api) , [Termux:Widget](https://f-droid.org/en/packages/com.termux.widget) and [Automate](https://play.google.com/store/apps/details?id=com.llamalab.automate) now or run the `install_app.sh` script at the end of the process.
+
+Then in Termux, run the following:
 ```
 curl -L https://raw.githubusercontent.com/y-muller/pegasus-android-helpers/install/install.sh |bash
 ```
 
 The installation script will be downloaded and executed. The installation steps are:
  * update the package list
- * prompt to install Termux:Widget and Termux:API from F-Droid, and Automate from the Play Store. They are all recommended but you can cancel to skip them if you wish.
  * install the packages needed to build Skyscraper from source
  * clone the Skyscraper repository and build it. This can take a while.
  * clone the pegasus-android-helpers repository and installs the scripts and sample configuration.
+
+If you haven't manually installed Automate and Termux's API and Widget, run the following and follow the prompts:
+```
+cd ~/src/pegasus-android-helpers
+./install_apps.sh
+```
 
 ### Optional but useful
 
