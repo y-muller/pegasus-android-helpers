@@ -2,7 +2,7 @@
 A few scripts and doc to help with Pegaus Frontend and Skyscraper on Android.
 
 ## Termux
-Termux is required to install Skyscraper. Install Termux and Termux:Widget from F-Droid or the Play Store.
+Termux is required to install Skyscraper. Install Termux and Termux:Widget from F-Droid or the Play Store. Installing Termux:API as well is recommended to use the Menu script.
 
 
 I like to install an SSH server so I can do the rest from the comfort of my computer. The `whoami` command gives your user name and also check your WiFi settings for your current IP address.
@@ -19,7 +19,12 @@ Set a new password for the first connection with the `passwd` command, then copy
 
 Connect to your device with something like this: `ssh -p 8022 u0_a141@192.168.1.105` .
 
-We are ready to install Skycraper!
+If you have installed Termux:API as recommended, you need to run this command:
+```
+pkg install termux-api
+```
+
+You are ready to install Skycraper!
 
 ## Skyscraper
 
@@ -37,10 +42,25 @@ When you delete games, it's assets are still there in your filesystem (covers, v
 
 If you are confident you can edit the top of the script to enable automatic deletion.
 
-**[VacuumPFE](scripts/VacuumPFE)**
+**[VacuumPFE](scripts/VacuumCache)**
 
 Skyscraper doesn't remove anything from its cache when games are deleted. The script will run the vacuum command on all the platforms.
 
+**[UpdateAndroidCollection](scripts/UpdateAndroidCollection)**
+
+Creating metadata for Android games is a manual process that this script tries to help with. This is described is details [here](ANDROID_APPS.md).
+
+**[Game Menu](scripts/Game Menu)**
+
+This script shows a graphical menu to call the other scripts. Termux:API is required for this one as it uses termux-dialog.
+
+*Configuration*
+
+Some of the scripts have optional configuration. Check the top of the scripts for the options but don't modify the scripts themselves. Instead create the file `~/.config/pegasus-android-helpers.conf` and override the variables there.
+
 ### Widgets
 If you have installed Termux:Widgets you can add shortcuts to your home screen. The scripts MUST be in `.shortcuts`.
+
+### App2Pegasus Automate Flow
+Automate is an Android app to, as the name says, automate things on your device. The App2Pegasus automation, or flow, is used to help create metadata for Android games. Its use is explained in the [Android Apps](ANDROID_APPS.md) page.
 
