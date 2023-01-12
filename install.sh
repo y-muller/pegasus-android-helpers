@@ -32,6 +32,9 @@ cp Skyscraper /data/data/com.termux/files/usr/bin
 # run Skyscraper once to get the .skyscraper directory structure
 Skyscraper
 
+# storage
+termux-setup-storage
+
 # pegasus-android-helpers
 cd ~/src
 if [[ -d pegasus-android-helpers ]]; then
