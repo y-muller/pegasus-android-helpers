@@ -33,7 +33,9 @@ cp Skyscraper /data/data/com.termux/files/usr/bin
 Skyscraper
 
 # storage
+# Need to wait until the permission is granted
 termux-setup-storage
+read -n 1 -r -s -p "Press any key to continue..." key
 
 # pegasus-android-helpers
 cd ~/src
