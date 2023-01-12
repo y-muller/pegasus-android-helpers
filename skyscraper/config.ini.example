@@ -2,14 +2,14 @@
 inputFolder="/storage/37E2-8CF6/emu/roms"
 gameListFolder="/storage/emulated/0/pegasus"
 importFolder="/storage/37E2-8CF6/emu/metadata/skyscraper-import"
-artworkXml="/storage/37E2-8CF6/emu/metadata/artwork.xml"
+artworkXml="~/.skyscraper/artwork.xml"
 subdirs="false"
 gameListBackup="true"
 relativePaths="false"
 nameTemplate="%t"
 videos="true"
 cacheWheels="true"
-unattendSkip="true"
+unattendSkip="false"
 frontend="pegasus"
 
 [pegasus]
