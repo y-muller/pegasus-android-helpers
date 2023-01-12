@@ -4,7 +4,7 @@ First install [Termux](https://f-droid.org/en/packages/com.termux) from F-Droid.
 
 Then in Termux, run the following:
 ```
-curl -L https://raw.githubusercontent.com/y-muller/pegasus-android-helpers/install/install.sh |bash
+curl -L https://raw.githubusercontent.com/y-muller/pegasus-android-helpers/main/install.sh |bash
 ```
 
 The installation script will be downloaded and executed. The installation steps are:
