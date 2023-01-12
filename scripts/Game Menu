@@ -73,9 +73,6 @@ case $index in
         echo Done
         ;;
     3)
-        echo Starting
-        read -n 1 -r -s -p "Press any key to continue..." key
-
         ~/.shortcuts/UpdateAndroidCollection
         echo Done
         read -n 1 -r -s -p "Press any key to continue..." key

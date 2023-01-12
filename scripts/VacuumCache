@@ -2,7 +2,7 @@
 
 # Vacuums the Skyscraper cache for all platforms found in the ROM path.
 
-inputline=$(grep -m 1 inputFolder .skyscraper/config.ini)
+inputline=$(grep -m 1 inputFolder ~/.skyscraper/config.ini)
 if [[ "$inputline" == "" ]]; then
     echo "Couldn't find 'inputFolder' in Skyscraper's config file."
     quit 1
@@ -20,7 +20,7 @@ do
     elif [[ "$platform" == "fbneo" ]]; then
         platform="fba"
     fi
-    Skyscraper -p $platform --cache vacuum
+    Skyscraper -p $platform --cache vacuum --flags unattendskip
 done
 
 read -n 1 -r -s -p "Press any key to continue..." key

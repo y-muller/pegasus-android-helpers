@@ -7,6 +7,7 @@
 # Create the file .config/pegasus_android_helpers.conf and override the variables.
 
 module=screenscraper
+exclude=("android")
 
 ##################
 if [[ -f ~/.config/pegasus_android_helpers.conf ]]; then
@@ -23,7 +24,7 @@ if [ ! -f ${lastrun} ]; then
 fi
 #---------------
 
-inputline=$(grep -m 1 inputFolder .skyscraper/config.ini)
+inputline=$(grep -m 1 inputFolder ~/.skyscraper/config.ini)
 rompath=${inputline##*=}
 rompath="${rompath%\"}"
 rompath="${rompath#\"}"
@@ -38,16 +39,26 @@ fi
 
 for system in $systems
 do
-    echo Processing $system ...
+    for i in "${exclude[@]}"
+    do
+        if [ "$i" == "$system" ] ; then
+            echo "Skipping $system"
+            skip=true
+        fi
+    done
+    if ! $skip ; then
+        echo Processing $system ...
 
-    if [ "$system" = "mame" ]; then
-        system="mame-libretro"
-    elif [ "$system" = "fbneo" ]; then
-        system="fba"
+        if [ "$system" = "mame" ]; then
+            system="mame-libretro"
+        elif [ "$system" = "fbneo" ]; then
+            system="fba"
+        fi
+
+        Skyscraper -p ${system} -s ${module} --flags unattendskip
+        Skyscraper -p ${system} --flags unattendskip
     fi
-
-    Skyscraper -p ${system} -s ${module} --flags unattendskip
-    Skyscraper -p ${system} --flags unattendskip
+    skip=false
 done
 
 # Update lastrun

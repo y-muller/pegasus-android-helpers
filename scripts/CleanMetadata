@@ -35,7 +35,7 @@ function find_match {
 # Make sure there is no leftover script from a previous run
 rm -f $orphansfile
 
-inputline=$(grep -m 1 inputFolder .skyscraper/config.ini)
+inputline=$(grep -m 1 inputFolder ~/.skyscraper/config.ini)
 if [[ "$inputline" == "" ]]; then
     echo "Couldn't find 'inputFolder' in Skyscraper's config file."
     quit 1
@@ -45,9 +45,9 @@ rompath="${rompath%\"}"
 rompath="${rompath#\"}"
 echo Looking for ROMs in $rompath
 
-inputline=$(grep -m 1 mediaFolder .skyscraper/config.ini)
+inputline=$(grep -m 1 mediaFolder ~/.skyscraper/config.ini)
 if [[ "$inputline" == "" ]]; then
-    inputline=$(grep -m 1 gameListFolder .skyscraper/config.ini)
+    inputline=$(grep -m 1 gameListFolder ~/.skyscraper/config.ini)
     if [[ "$inputline" == "" ]]; then
         inputline=$rompath
     fi
