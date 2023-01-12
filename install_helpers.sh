@@ -1,4 +1,5 @@
 # copy scripts to .shortcuts
+mkdir -p ~/.shortcuts
 cp scripts/* ~/.shortcuts/
 echo "Helper scripts copied to ~/.shotcuts"
 
