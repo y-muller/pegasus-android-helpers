@@ -66,3 +66,7 @@ If you have installed Termux:Widgets you can add shortcuts to your home screen. 
 ### App2Pegasus Automate Flow
 Automate is an Android app to, as the name says, automate things on your device. The App2Pegasus automation, or flow, is used to help create metadata for Android games. Its use is explained in the [Android Apps](ANDROID_APPS.md) page.
 
+## [Other scripts](OTHER_SCRIPTS.md)
+
+The first additional script was requested on the Pegasus Discord. It is helps with renaming and creating an M3U playlist for multi-discs games.
+

@@ -1,0 +1,114 @@
+# !/data/data/com.termux/files/usr/bin/bash
+
+# Creates an M3U playlist for a multi-disc game and rename the files for the
+# discs so that only the playlist appears in the front end.
+#
+# Run from Termux and give the game discs as paramenters. It is recommmended
+# to use a wildcard, for example:
+# $ cd roms/psx
+# $ multi2m3u PoPoLoCrois\ Monogatari\ II*
+# (Start typing the game's name and press TAB to autocomplete, add a star)
+
+
+##### config #####
+# Don't edit the configuration in this file as it would be overwritten on updates.
+# Create the file .config/pegasus_android_helpers.conf and override the variables.
+
+# Extension of the renamed discs in a multi-disc game. "cd" is recommended.
+# Do not include the dot before the extension.
+multidisc_ext="cd"
+
+##################
+if [[ -f ~/.config/pegasus_android_helpers.conf ]]; then
+    source ~/.config/pegasus_android_helpers.conf
+fi
+
+
+if [ "$#" = "0" ]; then
+  echo "Create an M3U playlist for multi-disc games."
+  echo "usage: multi2m3u [disc files]"
+  echo "For example: multi2m3u The\ Game*"
+fi
+
+# check that the first argument is really a file
+if [[ ! -f "$1" ]]; then
+    echo "Can't find the game files."
+    exit 1
+fi
+
+# check all the extensions are the same
+newline=$'\n'
+extlist=""
+for input in "$@"
+do
+    ext=${input##*.}
+    extlist=$extlist$newline$ext
+done
+IFS=$newline sorted=($(uniq <<<"${extlist[*]}"| wc -w)); unset IFS
+
+if [[ "$sorted" != "1" ]]; then
+    echo "Mismatched extensions."
+    exit 1
+fi
+echo "$# files provided in $ext format"
+
+# if game files are in a different directory, cd there
+directory=$(dirname "$1")/
+curdir=$PWD
+cd $directory
+
+files=()
+befores=()
+discs=()
+afters=()
+for input in "$@"
+do
+    if [[ "$directory" == "./" ]]; then
+        discfile=$input
+    else
+        discfile=${input#$directory}
+    fi
+    base=${discfile%.*}
+    disc=$(grep -Eo '[ \.\(]([Dd]is[ck]|[Cc][Dd]) [[:digit:]]+[ \.\)]' <<< "$discfile")
+    before=${base%%$disc*}
+    after=${base##*$disc}
+    befores+=( "$before" )
+    discs+=( "$disc" )
+    afters+=( "$after" )
+    files+=( "$discfile" )
+done
+
+IFS=$newline beforeok=($(uniq <<<"${befores[*]}"| wc -l)); unset IFS
+if [[ "$beforeok" != "1" ]]; then
+    echo "Mismatched filenames. Make sure all the discs all belong to the same game."
+    echo "Rename them if necessary so they are all similar."
+    exit 1
+fi
+
+# proceed (y/N)
+tbefore=${befores[0]%%[. _-]}
+m3ufilename="${tbefore}${afters[0]}.m3u"
+echo "Ready to create M3U playlist: $m3ufilename"
+echo "The discs will be renamed to:"
+for (( i=0; i<${#discs[@]}; i++ ))
+do
+    echo "  ${befores[i]}${discs[i]}${afters[i]}.${multidisc_ext}"
+done
+read -n 1 -r -s -p "Proceed? (y/N)" key
+echo ""
+
+# Create the M3u
+if [[ "$key" == "y" ]]; then
+    rm -rf "$m3ufilename"
+    for (( i=0; i<${#discs[@]}; i++ ))
+    do
+        echo "${befores[i]}${discs[i]}${afters[i]}.cd" >> "$m3ufilename"
+        mv "${files[i]}" "${befores[i]}${discs[i]}${afters[i]}.${multidisc_ext}"
+    done
+    echo "Done."
+else
+    echo "Aborted."
+fi
+
+cd $curdir
+
