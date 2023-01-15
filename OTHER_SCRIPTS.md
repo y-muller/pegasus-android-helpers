@@ -21,7 +21,7 @@ For example, if you have the following files:
 PoPoLoCrois Monogatari II (Disc 1) [T-En v0.3].chd
 PoPoLoCrois Monogatari II (Disc 2) [T-En v0.3].chd
 PoPoLoCrois Monogatari II (Disc 3) [T-En v0.3].chd
-'```
+```
 Run the script like this in Termux:
 ```
 $ cd roms/psx
