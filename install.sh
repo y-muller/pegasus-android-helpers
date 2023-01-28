@@ -14,8 +14,8 @@ pkg install build-essential qt5-qmake git zstd -y
 pkg install termux-api -y
 
 # keep the downloaded repos in the src directory
-mkdir -p src
-cd src
+mkdir -p ~/src
+cd ~/src
 
 # pegasus-android-helpers
 cd ~/src
