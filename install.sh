@@ -29,5 +29,8 @@ fi
 
 source ./bin/update_skyscraper.sh
 
+# install the helpers only after installing and running Skyscraper
+# to make sure .skyscraper already exists.
+cd ~/src/pegasus-android-helpers
 source ./install_helpers.sh
 

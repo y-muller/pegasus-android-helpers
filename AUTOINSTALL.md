@@ -1,6 +1,8 @@
 # Automated installation
 
-First install [Termux](https://f-droid.org/en/packages/com.termux) from F-Droid. Install [Termux:API](https://f-droid.org/en/packages/com.termux.api) , [Termux:Widget](https://f-droid.org/en/packages/com.termux.widget) and [Automate](https://play.google.com/store/apps/details?id=com.llamalab.automate) now or run the `install_app.sh` script at the end of the process.
+First install [Termux](https://f-droid.org/en/packages/com.termux) from F-Droid.
+
+I recommend to also install [Termux:API](https://f-droid.org/en/packages/com.termux.api) , [Termux:Widget](https://f-droid.org/en/packages/com.termux.widget) and [Automate](https://play.google.com/store/apps/details?id=com.llamalab.automate) now or run the `install_app.sh` script at the end of the process.
 
 Then in Termux, run the following to setup the storage access and start the installation:
 ```
