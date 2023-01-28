@@ -15,7 +15,24 @@ if [[ -f ~/.config/pegasus_android_helpers.conf ]]; then
 fi
 
 #---------------
-lastrun=~/.skyscraper/skyscraper.lastrun 
+lastrun=~/.skyscraper/scrape.lastrun 
+
+function usage() {
+    echo "$0:"
+    echo "Find all the new ROMs since the last run of the script and"
+    echo "call Skyscraper for the required platforms."
+    echo "usage:"
+    echo "  -a --all:  check all platforms instead of just the ones with new ROMs."
+    echo "  -h --help: this help."
+    exit 0
+}
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    usage
+elif [[ "$1" == "-a" || "$1" == "--all" ]]; then
+   echo "Scanning all platforms."
+   rm -f $lastrun
+fi
 
 if [ ! -f ${lastrun} ]; then
     echo "First run: this could take a long time..."

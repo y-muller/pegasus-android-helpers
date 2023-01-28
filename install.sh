@@ -17,21 +17,6 @@ pkg install termux-api -y
 mkdir -p src
 cd src
 
-# Skyscraper
-if [[ -d skyscraper ]]; then
-    cd skyscraper
-    git pull
-else
-    git clone https://github.com/detain/skyscraper.git
-    cd skyscraper
-fi
-qmake
-make
-cp Skyscraper /data/data/com.termux/files/usr/bin
-
-# run Skyscraper once to get the .skyscraper directory structure
-Skyscraper
-
 # pegasus-android-helpers
 cd ~/src
 if [[ -d pegasus-android-helpers ]]; then
@@ -42,4 +27,6 @@ else
     cd pegasus-android-helpers
 fi
 source ./install_helpers.sh
+
+source ./bin/update_skyscraper.sh
 
