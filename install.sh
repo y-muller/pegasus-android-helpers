@@ -23,7 +23,7 @@ if [[ -d pegasus-android-helpers ]]; then
     cd pegasus-android-helpers
     git pull
 else
-    git clone https://github.com/y-muller/pegasus-android-helpers
+    git clone https://github.com/y-muller/pegasus-android-helpers -b fork
     cd pegasus-android-helpers
 fi
 
