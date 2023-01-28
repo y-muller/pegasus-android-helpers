@@ -26,7 +26,8 @@ else
     git clone https://github.com/y-muller/pegasus-android-helpers
     cd pegasus-android-helpers
 fi
-source ./install_helpers.sh
 
 source ./bin/update_skyscraper.sh
+
+source ./install_helpers.sh
 
