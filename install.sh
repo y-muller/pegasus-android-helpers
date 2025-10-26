@@ -22,7 +22,7 @@ if [[ -d skyscraper ]]; then
     cd skyscraper
     git pull
 else
-    git clone https://github.com/detain/skyscraper.git
+    git clone https://github.com/Gemba/skyscraper.git
     cd skyscraper
 fi
 qmake
